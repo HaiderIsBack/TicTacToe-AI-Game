@@ -89,23 +89,26 @@ function winningLine(){
     const bc = board[2][1];
     const br = board[2][2];
 
+    var boxSize = window.innerWidth < 768 ? 100 : 150;
+    var containerSize = window.innerWidth < 768 ? 300 : 450;
+
     // Rows
     if(tl === winningPlayer && tc === winningPlayer && tr === winningPlayer){
         line.style.width = "100%";
         line.style.height = "2rem";
-        line.style.top = "100px";
+        line.style.top = (Math.floor(boxSize / 2) + (boxSize * 0)) + "px";
         line.style.left = "0";
         line.style.transform = "translateY(-50%)";
     }else if(ml === winningPlayer && mc === winningPlayer && mr === winningPlayer){
         line.style.width = "100%";
         line.style.height = "2rem";
-        line.style.top = "300px";
+        line.style.top = (Math.floor(boxSize / 2) + (boxSize * 1)) + "px";
         line.style.left = "0";
         line.style.transform = "translateY(-50%)";
     }else if(bl === winningPlayer && bc === winningPlayer && br === winningPlayer){
         line.style.width = "100%";
         line.style.height = "2rem";
-        line.style.top = "500px";
+        line.style.top = (Math.floor(boxSize / 2) + (boxSize * 2)) + "px";
         line.style.left = "0";
         line.style.transform = "translateY(-50%)";
     }
@@ -115,19 +118,19 @@ function winningLine(){
         line.style.width = "2rem";
         line.style.height = "100%";
         line.style.top = "0";
-        line.style.left = "100px";
+        line.style.left = (Math.floor(boxSize / 2) + (boxSize * 0)) + "px";
         line.style.transform = "translateX(-50%)";
     }else if(tc === winningPlayer && mc === winningPlayer && bc === winningPlayer){
         line.style.width = "2rem";
         line.style.height = "100%";
         line.style.top = "0";
-        line.style.left = "300px";
+        line.style.left = (Math.floor(boxSize / 2) + (boxSize * 1)) + "px";
         line.style.transform = "translateX(-50%)";
     }else if(tr === winningPlayer && mr === winningPlayer && br === winningPlayer){
         line.style.width = "2rem";
         line.style.height = "100%";
         line.style.top = "0";
-        line.style.left = "500px";
+        line.style.left = (Math.floor(boxSize / 2) + (boxSize * 2)) + "px";
         line.style.transform = "translateX(-50%)";
     }
 
@@ -136,13 +139,13 @@ function winningLine(){
         line.style.width = "2rem";
         line.style.height = "100%";
         line.style.top = "0";
-        line.style.left = "300px";
+        line.style.left = Math.floor(containerSize / 2) + "px";
         line.style.transform = "rotate(45deg) translateX(-50%)";
     }else if(tl === winningPlayer && mc === winningPlayer && br === winningPlayer){
         line.style.width = "2rem";
         line.style.height = "100%";
         line.style.top = "0";
-        line.style.left = "300px";
+        line.style.left = Math.floor(containerSize / 2) + "px";
         line.style.transform = "rotate(-45deg) translateX(-50%)";
     }
 
@@ -281,7 +284,7 @@ function playAgain(){
 }
 
 function main() {
-    turn = Math.floor(Math.random() * 100) >= 50 ? "X" : "O";
+    turn = Math.floor(Math.random() * 100) >= 70 ? "X" : "O";
 
     if (turn === "X") {
         const [val, move] = maxvalue(board);
@@ -298,10 +301,10 @@ function main() {
     boxes.forEach((box) => {
         box.addEventListener("click", (e) => {
             if (!terminal(board) && !gameOver) {
-                if (turn === "O") { // Only allow user to play on their turn
+                if (turn === "O") {
                     if (e.target.classList.contains("box") && e.target.innerHTML === "") {
                         const sym = document.createElement("div");
-                        sym.classList.add("o"); // User is always "O"
+                        sym.classList.add("o");
                         e.target.appendChild(sym);
 
                         const boxIndex = getBoxNumber(e.target) - 1;
@@ -312,20 +315,20 @@ function main() {
                         if (checkGameOver()) {
                             gameOver = true;
                             initiateGameOver(winner(board));
-                            return; // Stop the game
+                            return;
                         }
 
-                        turn = "X"; // Switch to CPU's turn
+                        turn = "X";
                         const [val, move] = maxvalue(board);
                         CPUMove(move, "X");
 
                         if (checkGameOver()) {
                             gameOver = true;
                             initiateGameOver(winner(board));
-                            return; // Stop the game
+                            return;
                         }
 
-                        turn = "O"; // Switch back to user's turn
+                        turn = "O";
                     }
                 }
             } else {
