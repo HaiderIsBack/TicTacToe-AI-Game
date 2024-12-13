@@ -284,7 +284,7 @@ function playAgain(){
 }
 
 function main() {
-    turn = Math.floor(Math.random() * 100) >= 70 ? "X" : "O";
+    turn = Math.floor(Math.random() * 100) >= 10 ? "X" : "O";
 
     if (turn === "X") {
         const [val, move] = maxvalue(board);
