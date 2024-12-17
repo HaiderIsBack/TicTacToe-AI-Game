@@ -270,7 +270,7 @@ function playAgain(){
     removeGameOver();
     gameOver = false;
 
-    turn = Math.floor(Math.random() * 100) >= 50 ? "X" : "O";
+    turn = Math.floor(Math.random() * 100) >= 10 ? "X" : "O";
     if (turn === "X") {
         const [val, move] = maxvalue(board);
         CPUMove(move, turn);
